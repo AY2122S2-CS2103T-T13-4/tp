@@ -21,15 +21,15 @@ public class StatusCommand extends Command {
     public static final String COMMAND_WORD = "status";
 
     public static final String MESSAGE_ADD_STATUS_SUCCESS = "Added status to Person: %1$s";
-    public static final String MESSAGE_ADD_STATUS_FAILURE = "Tags should be either 'blacklist' or 'favourite'";
     public static final String MESSAGE_DELETE_STATUS_SUCCESS = "Removed status from Person: %1$s";
+    public static final String MESSAGE_ADD_STATUS_FAILURE = "Tags should be either 'blacklist' or 'favourite'";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the status of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing status will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_STATUS + "[STATUS]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_STATUS + "Likes to swim.";
+            + PREFIX_STATUS + "blacklist";
 
     private final Index index;
     private final Status status;
