@@ -270,16 +270,39 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​                                   | I want to …​                 | So that I can…​                                                        |
+| -------- |-------------------------------------------|------------------------------|------------------------------------------------------------------------|
+| `* *`  | student                                   | Keep track of any friends taking similar mods | Form study groups                                              |
+| `* *`  | student                                  | blacklist people       | I know who to watch out for               |
+| `* * *`  | sociable student                                      | find students who are taking the same module as me             |        collaborate                                                                |
+| `* * *`  | Forgetful student                                      | find my friend's contacts if i were to forget their number              |         locate details of persons without having to go through the entire list                        |
+| `* * *`  | student                                       | clear all my data       | So it's convenient if i switch course/school |
+| `* * *`    | student                                     | favourite some contact numbers | I can easily find my most contacted friends easily          |
+| `* * *`       | Careless student | can change or delete a person's details   | in case I make a mistake                                               |
+| `* * *`      | student | can change or delete a person's details   |i can keep track of the modules                                            |
+| `* *`      | Long-time student | I can archive other students that have graduated   | so that listings will not be cluttered                                        |
+| `* *`      | student | know what mods my friends are taking/ have taken   | so that I can seek them out for help should I take that mod in future semesters                                               |
+| `* *`      | student | I can save past module information as history   | so I can refer back if I need to                                               |
+| `* *`      | student | can format the information in a text file   | so I can paste it where I need it                                            |
+| `*`      | Hall student | find friends who are staying in the same hall  | Convenient meetups                                               |
+| `*`      | student | see which days my friends will be at school  | I can meet them for meals/study sessions                                               |
+| `*`      | student | view zoom links (tut and lec) of a module I am enrolled in   |easily view the different conferencing URLs all in one place        
+| `*`      | student | find my friends easily   |I can talk to them                                              |
+| `*`      | student | can keep future mods in a wishlist   | so friends can decide if we want to take that mod together in the future                                            |
+| `*`      | Insecure student | can highlight students who are trustworthy   |so I know who are helpful for future modules                                              |
+| `*`      | Neglectful student | find my class' locations   |I know where to go                                              |
+| `*`      | student | see which days my friends will be at school |I can meet them for meals/study sessions                                           |
+| `*`      | freshman | find other freshmen    |I can befriend them                                             |
+| `*`      | Competitive Student | view the CAP of other students   |see my own standing                                           |
+| `*`      | New user | can choose incremental commands  |so I can still use the application even if I am not familiar with it                                             |
+| `*`      | introverted student | find people similar to me  |we work together for projects    
+| `*`      | Foreign student | Meet and work with classmates from same country  |lower language barrier gap |
+| `*`      | Sporty student | meet friends who plays the same sport / CCA  |similar schedules |
+| `*`      | student | contact my friends via the medium of choice (call/sms/email) |the most effective/appropriate method of communication is used for each person |
+| `*`      | A- grade student | contact my professor |I can get answers that fellow students/TAs cannot provide |                                  
 
-*{More to be added}*
+listed include a comprehensive list of user stories. Our team has shortlisted the first 8 as what we plan to work on and eventually implement.     
+
 
 ### Use cases
 
