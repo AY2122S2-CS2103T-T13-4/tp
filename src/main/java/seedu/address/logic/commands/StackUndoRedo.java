@@ -1,4 +1,4 @@
-package seedu.address.logic;
+package seedu.address.logic.commands;
 
 import java.util.LinkedList;
 
@@ -7,21 +7,17 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UndoableCommand;
 
-/**
- * Undo-redo Stack
- * Solution adapted from https://github.com/se-edu/addressbook-level4/pull/610/files with modifications / bug fixes
- */
-public class UndoRedoStack {
+public class StackUndoRedo {
 
     private LinkedList<UndoableCommand> undoStack;
     private LinkedList<UndoableCommand> redoStack;
 
-    public UndoRedoStack() {
+    public StackUndoRedo() {
         undoStack = new LinkedList<>();
         redoStack = new LinkedList<>();
     }
 
-    public UndoRedoStack(UndoRedoStack otherUndoRedoStack) {
+    public StackUndoRedo(StackUndoRedo otherUndoRedoStack) {
         undoStack = otherUndoRedoStack.undoStack;
         redoStack = otherUndoRedoStack.redoStack;
     }
@@ -69,7 +65,7 @@ public class UndoRedoStack {
     }
 
     /**
-     * Returns true if exists any more commands to be redone.
+     * Returns true if there are more commands that can be redone.
      */
     public boolean canRedo() {
         return redoStack.size() > 0;
@@ -83,11 +79,11 @@ public class UndoRedoStack {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof UndoRedoStack)) {
+        if (!(other instanceof StackUndoRedo)) {
             return false;
         }
 
-        UndoRedoStack stack = (UndoRedoStack) other;
+        StackUndoRedo stack = (StackUndoRedo) other;
 
         // state check
         return undoStack.equals(stack.undoStack)

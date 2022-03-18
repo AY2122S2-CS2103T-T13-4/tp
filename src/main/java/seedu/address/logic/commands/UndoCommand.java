@@ -2,9 +2,11 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.StackUndoRedo;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
+import seedu.address.model.*;
+import seedu.address.model.person.Person;
 
 /**
  * Undo the previous {@code UndoableCommand}.
@@ -12,20 +14,30 @@ import seedu.address.model.Model;
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
-    public static final String MESSAGE_SUCCESS = "Undo success!";
-    public static final String MESSAGE_FAILURE = "No more commands to undo!";
+    public static final String MESSAGE_SUCCESS = "Undo command executed successfully!";
+    public static final String MESSAGE_FAILURE = "There is no more command to undo!";
+
+
+    private ReadOnlyAddressBook<Person> previousAddressBook;
+
 
     @Override
-    public CommandResult execute(Model model) throws CommandException {
-        UndoRedoStack undoRedoStack = UndoRedoStack.getUndoRedoStack();
+    public CommandResult execute(Model model, CommandHistory commandHistory,
+                                 StackUndoRedo undoRedoStack) throws CommandException {
         requireAllNonNull(model, undoRedoStack);
 
         if (!undoRedoStack.canUndo()) {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
-        undoRedoStack.popUndo().undo(model);
-        return new CommandResult(MESSAGE_SUCCESS);
+        previousAddressBook = new AddressBook(model.getAddressBook());
+
+        UndoableCommand toUndoCommand = undoRedoStack.popUndo();
+        toUndoCommand.undo(model);
+
+        Model oldModel = new ModelManager(previousAddressBook, new UserPrefs());
+        toUndoCommand.save(oldModel);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toUndoCommand.getSuccessMessage()));
     }
 
 }

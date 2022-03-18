@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.SortCommand.PersonComparator;
 import seedu.address.model.person.Person;
 
 /**
@@ -111,6 +112,11 @@ public class ModelManager implements Model {
         addressBook.setPerson(target, editedPerson);
     }
 
+    @Override
+    public void sortPerson(PersonComparator comparator) {
+        addressBook.sortPerson(comparator);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -125,6 +131,7 @@ public class ModelManager implements Model {
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
+
         filteredPersons.setPredicate(predicate);
     }
 

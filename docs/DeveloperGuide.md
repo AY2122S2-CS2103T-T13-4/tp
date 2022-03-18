@@ -257,7 +257,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of contacts within their educational organisation
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
@@ -270,58 +270,215 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​                                   | I want to …​                 | So that I can…​                                                        |
+| -------- |-------------------------------------------|------------------------------|------------------------------------------------------------------------|
+| `* * *`  | student                                   | add modules that I am taking | keep track of the modules                                              |
+| `* * *`  | new user                                  | see usage instructions       | refer to instructions when I forget how to use the App                 |
+| `* * *`  | user                                      | add a new person             |                                                                        |
+| `* * *`  | user                                      | delete a person              | remove entries that I no longer need                                   |
+| `* * *`  | user                                      | find a person by name        | locate details of persons without having to go through the entire list |
+| `* *`    | user                                      | hide private contact details | minimize chance of someone else seeing them by accident                |
+| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
 
 *{More to be added}*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `ModuleMateFinder` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+
+**Use case: UC01 - Listing all contacts**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to list out all contacts.
+2. ModuleMateFinder shows a list of all contacts.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
-
+- 2a. The list is empty.  
   Use case ends.
 
-* 3a. The given index is invalid.
+**Use case: UC02 - Adding a contact**
 
-    * 3a1. AddressBook shows an error message.
+**MSS**
 
+1. User requests to add a person as a contact.
+2. User inputs the information of the person.
+3. ModuleMateFinder adds the person as a contact.
+
+   Use case ends.
+
+**Extensions**
+
+- 3a. The given name already exists in ModuleMateFinder.
+    - 3a1. ModuleMateFinder shows an error message.  
       Use case resumes at step 2.
+
+
+**Use case: UC03 - Favourite a contact**
+
+**MSS**
+
+1. User requests to <u>list contacts (UC01)</u>.
+2. ModuleMateFinder shows a list of persons.
+3. User requests to favourite a person in the list.
+4. ModuleMateFinder favourites the person.
+
+   Use case ends.
+
+**Extensions**
+
+- 2a. The list is empty.  
+  Use case ends.
+- 3a. The given index is invalid.
+    - 3a1. ModuleMateFinder shows an error message.  
+      Use case resumes at step 2.
+
+  
+**Use case: UC04 - Blacklisting a contact**
+
+**MSS**
+1. User requests to <u>list contacts (UC01)</u>.
+2. ModuleMateFinder shows a list of persons.
+3. User requests to blacklist a person in the list.
+4. ModuleMateFinder blacklist the person. 
+   
+   Use case ends.
+
+**Extensions**
+- 2a. The list is empty.  
+  Use case ends.
+- 3a. The given index is invalid.
+    - 3a1. ModuleMateFinder shows an error message.  
+      
+      Use case resumes at step 2.
+
+
+**Use case: UC05 - Filter contacts by modules**
+
+**MSS**
+1. User requests to <u>list contacts (UC01)</u>.
+2. ModuleMateFinder shows a list of persons.
+3. User requests to filter the list by a certain module (e.g. `CS3230`).
+4. ModuleMateFinder finds all persons with the module `CS3230`.
+5. ModuleMateFinder shows a list of persons with the module `CS3230`.  
+   Use case ends.
+
+**Extensions**
+- 2a. The list is empty.  
+  Use case ends.
+- 3a. No persons has a matching module.
+    - 3a1. ModuleMateFinder shows an empty list.  
+      Use case ends.
+
+
+**Use case: UC06 - Filter contacts by name**
+
+**MSS**
+1. User requests to <u>list contacts (UC01)</u>.
+2. ModuleMateFinder shows a list of persons.
+3. User requests to filter the list by a certain name (e.g. `Hans`).
+4. ModuleMateFinder finds all persons with the tag `Hans`.
+5. ModuleMateFinder shows a list of persons with the tag `Hans`.
+   Use case ends.
+
+**Extensions**
+- 2a. The list is empty.  
+  Use case ends.
+- 3a. No persons has a matching name.
+    - 3a1. ModuleMateFinder shows an empty list.  
+      Use case ends.
+
+
+**Use case: UC07 - Editing a contact's details**
+
+**MSS**
+
+1. User requests to <u>list contacts (UC01)</u>.
+2. ModuleMateFinder shows a list of persons.
+3. User requests to edit a contact on the list.
+4. User inputs the updated information.
+5. ModuleMateFinder updates the contact's details.
+
+   Use case ends.
+
+**Extensions**
+- 2a. The list is empty.  
+  Use case ends.
+- 3a. The provided index is invalid.
+    - 3a1. ModuleMateFinder displays an error message.
+      
+      Use case resumes at step 2.
+
+**Use case: UC08 - Deleting a contact**
+
+**MSS**
+1. User requests to <u>list contacts (UC01)</u>.
+2. ModuleMateFinder shows a list of persons.
+3. User requests to delete a contact at a given index.
+4. ModuleMateFinder deletes the contact at the index .
+   
+   Use case ends.
+
+**Extensions**
+- 2a. The list is empty.  
+  Use case ends.
+- 3a. The provided index is invalid.
+    - 3a1. ModuleMateFinder displays an error message.
+      
+      Use case resumes at step 2.
+  
+
+**Use case: UC09 - Clearing all entries**
+
+**MSS**
+
+1. User requests to clear all entries in ModuleMateFinder.
+2. ModuleMateFinder removes all saved data and displays a success 
+message.
+
+
+**Use case: UC10 - Exiting the application**
+
+**MSS**
+
+1. User requests to exit ModuleMateFinder.
+2. ModuleMateFinder closes.
+   
+   Use case ends.
 
 *{More to be added}*
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. The application must be _free_.
+2. Simple to use even if you have no experience.
+3. Offline application used by each person.
+4. The application should run on Linux, MacOS and Windows as long as it has Java 11 or above installed.
+5. The product is not required to handle the forming of groups for users.
+6. The product should be highly testable.
+7. Documentation for the product must be written clearly and concisely.
+8. This product is not required to be installed; it can be run as an executable.
+9. Clear and comprehensible error messages?
+10. Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
+11. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+12. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+
 
 *{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
+* **Contact/Person**: A classmate whose information is kept in the address book. 
+* **Module**: A course that is held at NUS with specific module codes e.g. CS3230
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Favourite**: To mark a person favourably
+* **Blacklist**: To mark a person unfavourably
+* **Fast Typist**: A person who can type at speeds greater or equal to 70 words per minute.
 
 --------------------------------------------------------------------------------------------------------------------
 
