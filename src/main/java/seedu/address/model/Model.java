@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.SortCommand.PersonComparator;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Status;
 
 /**
  * The API of the Model component.
@@ -84,6 +85,8 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
+
+    ObservableList<Status> getFilteredStatusList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

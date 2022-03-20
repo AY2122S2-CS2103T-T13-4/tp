@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Status;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -22,13 +23,16 @@ class JsonSerializableAddressBook {
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedStatus> statuses = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
+    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
+                                       @JsonProperty("statuses") List<JsonAdaptedStatus> statuses) {
         this.persons.addAll(persons);
+        this.statuses.addAll(statuses);
     }
 
     /**
@@ -38,6 +42,7 @@ class JsonSerializableAddressBook {
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        statuses.addAll(source.getStatusList().stream().map(JsonAdaptedStatus::new).collect(Collectors.toList()));
     }
 
     /**
@@ -53,6 +58,10 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
             addressBook.addPerson(person);
+        }
+        for (JsonAdaptedStatus jsonAdaptedStatus : statuses) {
+            Status status = jsonAdaptedStatus.toModelType();
+            addressBook.addStatus(status);
         }
         return addressBook;
     }

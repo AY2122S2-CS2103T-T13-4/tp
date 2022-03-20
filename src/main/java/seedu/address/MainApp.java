@@ -90,6 +90,8 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
+        System.out.println("Line 93 MainApp:");
+        System.out.println(initialData.getStatusList());
         return new ModelManager(initialData, userPrefs);
     }
 

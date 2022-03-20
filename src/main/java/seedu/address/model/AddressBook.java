@@ -7,7 +7,9 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.SortCommand.PersonComparator;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Status;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.UniqueStatusList;
 
 /**
  * Wraps all data at the address-book level
@@ -16,7 +18,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
-
+    private final UniqueStatusList statuses;
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -26,6 +28,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        statuses = new UniqueStatusList();
     }
 
     public AddressBook() {}
@@ -48,6 +51,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setStatuses(List<Status> statuses) {
+        this.statuses.setStatuses(statuses);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -55,6 +62,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setStatuses(newData.getStatusList());
     }
 
     //// person-level operations
@@ -86,6 +94,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    public void setStatus(Status status, Status editedStatus) {
+        requireNonNull(editedStatus);
+
+        statuses.setStatus(status, editedStatus);
+    }
+
     /**
      * Sort persons in the address book with given PersonComparator {@code comparator}.
      */
@@ -98,6 +112,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+    }
+
+    public void addStatus(Status status) {
+        statuses.add(status);
     }
 
     //// util methods
@@ -118,6 +136,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Status> getStatusList() {
+        return statuses.asUnmodifiableObservableList();
     }
 
     @Override

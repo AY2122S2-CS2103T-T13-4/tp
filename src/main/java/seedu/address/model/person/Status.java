@@ -11,7 +11,7 @@ public class Status implements Comparable<Status> {
 
     public static final String MESSAGE_CONSTRAINTS = "Status should be either 'blacklist' or 'favourite'";
     public final String value;
-
+    public final String remark;
     /**
      * Constructor for a status
      * Represents a status for a Person.
@@ -24,17 +24,37 @@ public class Status implements Comparable<Status> {
         checkArgument(isValidStatus(lowerCaseStatus), MESSAGE_CONSTRAINTS);
         // Here, we ensure that status is in lower case.
         value = lowerCaseStatus;
+        this.remark = "";
+    }
+
+    public Status(String status, String remark) {
+        requireNonNull(status);
+        requireNonNull(remark);
+        String lowerCaseStatus = status.toLowerCase();
+        checkArgument(isValidStatus(lowerCaseStatus), MESSAGE_CONSTRAINTS);
+        // Here, we ensure that status is in lower case.
+        value = lowerCaseStatus;
+        this.remark = remark;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getRemark(){
+        return remark;
     }
 
     @Override
     public String toString() {
-        return value;
+        return value + " " + remark;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Status // instanceof handles nulls
+                && remark.equals(((Status) other).remark)
                 && value.equals(((Status) other).value)); // state check
     }
 
