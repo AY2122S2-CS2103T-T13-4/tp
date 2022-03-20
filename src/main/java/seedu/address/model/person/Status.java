@@ -12,6 +12,7 @@ public class Status implements Comparable<Status> {
     public static final String MESSAGE_CONSTRAINTS = "Status should be either 'blacklist' or 'favourite'";
     public final String value;
     public final String remark;
+
     /**
      * Constructor for a status
      * Represents a status for a Person.
@@ -27,6 +28,13 @@ public class Status implements Comparable<Status> {
         this.remark = "";
     }
 
+    /**
+     * Constructor for a status
+     * Represents a status for a Person.
+     *
+     * @param status whether the person is a favourite, blacklisted or neither
+     * @param remark remark to be made about the person
+     */
     public Status(String status, String remark) {
         requireNonNull(status);
         requireNonNull(remark);
@@ -41,13 +49,13 @@ public class Status implements Comparable<Status> {
         return value;
     }
 
-    public String getRemark(){
+    public String getRemark() {
         return remark;
     }
 
     @Override
     public String toString() {
-        return value + " " + remark;
+        return value + ", " + remark;
     }
 
     @Override

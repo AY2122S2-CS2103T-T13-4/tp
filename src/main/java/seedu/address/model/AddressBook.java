@@ -94,12 +94,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
-    public void setStatus(Status status, Status editedStatus) {
-        requireNonNull(editedStatus);
-
-        statuses.setStatus(status, editedStatus);
-    }
-
     /**
      * Sort persons in the address book with given PersonComparator {@code comparator}.
      */
@@ -114,6 +108,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    /**
+     * Adds a status to the address book.
+     * The status must not already exist in the address book.
+     */
     public void addStatus(Status status) {
         statuses.add(status);
     }

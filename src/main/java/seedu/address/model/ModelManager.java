@@ -37,10 +37,6 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
 
-        System.out.print("Line 36 ModelManager.java:\n");
-        System.out.println(addressBook.getStatusList());
-        System.out.println(this.addressBook.getStatusList());
-
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredStatus = new FilteredList<>(this.addressBook.getStatusList());
     }
@@ -136,6 +132,10 @@ public class ModelManager implements Model {
         return filteredPersons;
     }
 
+    /**
+     * Returns an unmodifiable view of the list of {@code Status} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
     @Override
     public ObservableList<Status> getFilteredStatusList() {
         return filteredStatus;

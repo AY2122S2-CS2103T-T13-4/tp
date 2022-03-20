@@ -1,15 +1,16 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Status;
 
-import java.util.logging.Logger;
+
 
 /**
  * Panel containing the list of persons.
@@ -26,8 +27,6 @@ public class StatusListPanel extends UiPart<Region> {
      */
     public StatusListPanel(ObservableList<Status> statusList) {
         super(FXML);
-        System.out.println("Line 29 Statuslistpanel");
-        System.out.println(statusList);
         statusListView.setItems(statusList);
         statusListView.setCellFactory(listView -> new StatusListViewCell());
     }
