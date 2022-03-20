@@ -50,7 +50,6 @@
 
             <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
                <items>
-      
               <VBox fx:id="personList" minWidth="340" prefWidth="340" styleClass="pane-with-border">
                 <padding>
                   <Insets bottom="10" left="10" right="10" top="10" />
