@@ -142,6 +142,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateFilteredStatusList(Predicate<Status> predicate) {
+        requireNonNull(predicate);
+
+        filteredStatus.setPredicate(predicate);
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
 

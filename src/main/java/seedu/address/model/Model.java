@@ -15,7 +15,7 @@ import seedu.address.model.person.Status;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
-
+    Predicate<Status> PREDICATE_SHOW_ALL_STATUS = unused -> true;
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -88,6 +88,12 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered status list */
     ObservableList<Status> getFilteredStatusList();
+
+    /**
+     * Updates the filter of the filtered status list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredStatusList(Predicate<Status> predicate);
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

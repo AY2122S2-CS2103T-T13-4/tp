@@ -80,6 +80,8 @@ ModuleMate Finder is a desktop app that allows students to find people taking th
 - [Clear](#clearing-all-entries--clear)
 - [Clear all Modules from Contact](#clearing-all-modules-for-a-person--clearmodules)
 - [Status](#set-a-status-for-a-person--status)
+- [ListStatus](#list-all-statuses)
+- [FindStatus](#find-a-status-by-a-person)
 - [Find](#locating-a-person-find)
 - [Filter](#locating-a-person-by-their-module-filter)
 - [Sort](#sorting-contacts-in-list-sort)
@@ -201,6 +203,25 @@ Format: `status INDEX s/STATUS`
 Examples:
 - `status 1 s/blacklist` tags the 1st person in ModuleMate Finder as blacklisted.
 - `status 2 s/favourite` tags the 2nd person in ModuleMate Finder as favourite.
+
+### List all status: `liststatus`
+Show a list of all statuses in ModuleMate Finder.
+
+Format: `liststatus`
+
+### Find a person's status: `findstatus`
+
+Finds a person's status.
+
+Format: `findstatus INDEX`
+
+Format: `findstatus INDEX s/STATUS`
+- Finds a status for the person at specified `INDEX`
+- `INDEX` must be a **positive integer** 1, 2, 3, ...
+
+Examples:
+- `findstatus 1` finds the status of the 1st person in ModuleMate Finder.
+- `findstatus 2` finds the status of the 2nd person in ModuleMate Finder.
 
 
 ### Locating a person: `find`
