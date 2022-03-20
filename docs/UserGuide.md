@@ -7,7 +7,7 @@ ModuleMateFinder Level 3 (MMF3) is a **desktop app for managing contacts in your
 
 - [Quick Start](#quick-start)
 - [Features](#features)
-  - [Quick Jump](#quick-jump)
+- [Quick Jump](#quick-jump)
 - [FAQ](#faq)
 - [Command Summary](#command-summary)
 
@@ -112,6 +112,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS​`
 Examples:
 * `add n/Bob p/87654321 e/bob@u.nus.edu`
 
+Additionally, if one were to simply use `add`, it would open up a new window to allow users to systematically add a new contact
+![addWindow.png](images/addWindow.png)
+
 ### Adding Module(s) to a Contact : `addmodule`
 
 Adds module(s) to an existing contact
@@ -123,8 +126,8 @@ Format: `addmodule INDEX m/MODULE [m/MODULE]...`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `addmodule 2 m/CS1231`
-* `addmodule 2 m/CS1231 m/2103T`
+* `addmodule 2 m/CS1231` Adds a module, `CS1231` to the 2nd person
+* `addmodule 2 m/CS1231 m/CS2103T` Adds two modules, `CS1231` and `CS2103T` to the 2nd person
 
 ### Editing a person : `edit`
 
@@ -168,8 +171,8 @@ Format: `deletemodule INDEX m/MODULE...`
 * The modules will be deleted only if the person has the specified modules.
 
 Examples:
-* `list` followed by `delete 2 m/CS3230` deletes the module CS3230 for the 2nd person in ModuleMate Finder.
-* `find Betsy` followed by `delete 1 m/CS2102 m/CS2040S` deletes the specified modules for the 1st person in the results of the `find` command.
+* `list` followed by `deletemodule 2 m/CS3230` deletes the module CS3230 for the 2nd person in ModuleMate Finder.
+* `find Betsy` followed by `deletemodule 1 m/CS2102 m/CS2040S` deletes the specified modules for the 1st person in the results of the `find` command.
 
 
 ### Clearing all entries : `clear`
@@ -203,6 +206,7 @@ Format: `status INDEX s/STATUS`
 Examples:
 - `status 1 s/blacklist` tags the 1st person in ModuleMate Finder as blacklisted.
 - `status 2 s/favourite` tags the 2nd person in ModuleMate Finder as favourite.
+- `status 2 s/` will untag the 2nd person in ModuleMate Finder, leaving them with no `Status`
 
 ### List all status: `liststatus`
 Show a list of all statuses in ModuleMate Finder.
@@ -222,7 +226,6 @@ Format: `findstatus INDEX s/STATUS`
 Examples:
 - `findstatus 1` finds the status of the 1st person in ModuleMate Finder.
 - `findstatus 2` finds the status of the 2nd person in ModuleMate Finder.
-
 
 ### Locating a person: `find`
 
@@ -326,20 +329,22 @@ A: As long as the module offered can be found in NUSmod, it will be available on
 
 ## Command summary
 
-| Action            | Format                                                                                                     | Examples                               |
-|-------------------|------------------------------------------------------------------------------------------------------------|----------------------------------------|
-| **List**          | `list`                                                                                                     | `list`                                 |
-| **Add**           | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS`                                                              | `add n/Bob p/87654321 e/bob@u.nus.edu` |
-| **Add Module**    | `addmodule INDEX m/MODULE`                                                                                  | `addmodule 4 m/CS2100`                 |
-| **Delete**        | `delete INDEX`                                                                                             | `delete 3`                             |
-| **Delete Module** | `deletemodule index m/MODULE`...                                                                            | `deletemodule 1 m/CS1231`              |
-| **Edit**          | `edit index [n/NAME] [c/CODE] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]` **brackets indicate optional         | `edit 1 n/Alice`                       |
-| **Clear**         | `clear`                                                                                                    | `clear`                                |
-| **Clear Modules** | `clearmodules INDEX`                                                                                       | `clearmodules 3`                       |
-| **Status**        | `status INDEX s/STATUS`                                                                                    | `status 2 s/favourite`                 |
-| **Find**          | `find KEYWORD [MORE_KEYWORDS]`                                                                             | `find James Jake`                      |
-| **Filter**        | `filter MODULE`                                                                                             | `filter CS3230`                      |
+| Action            | Format                                                                                               | Examples                               |
+|-------------------|------------------------------------------------------------------------------------------------------|----------------------------------------|
+| **List**          | `list`                                                                                               | `list`                                 |
+| **Add**           | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS`                                                        | `add n/Bob p/87654321 e/bob@u.nus.edu` |
+| **Add Module**    | `addmodule INDEX m/MODULE`                                                                           | `addmodule 4 m/CS2100`                 |
+| **Delete**        | `delete INDEX`                                                                                       | `delete 3`                             |
+| **Delete Module** | `deletemodule index m/MODULE`...                                                                     | `deletemodule 1 m/CS1231`              |
+| **Edit**          | `edit index [n/NAME] [c/CODE] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]` **brackets indicate optional   | `edit 1 n/Alice`                       |
+| **Clear**         | `clear`                                                                                              | `clear`                                |
+| **Clear Modules** | `clearmodules INDEX`                                                                                 | `clearmodules 3`                       |
+| **Status**        | `status INDEX s/STATUS`                                                                              | `status 2 s/favourite`                 |
+| **List Status**   | `liststatus`                                                                                         | `liststatus`                           |
+| **Find Status**   | `findstatus INDEX`                                                                                   | `findstatus 2`             |
+| **Find**          | `find KEYWORD [MORE_KEYWORDS]`                                                                       | `find James Jake`                      |
+| **Filter**        | `filter MODULE`                                                                                      | `filter CS3230`                        |
 | **Sort**          | `sort [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/status] [m/MODULE] [o/ORDER]`  **brackets indicate optional | `sort n/ p/ o/desc`                    |
-| **Undo**          | `undo`                                                                                                     | `undo`                                 |
-| **Redo**          | `redo`                                                                                                     | `redo`                                 |
+| **Undo**          | `undo`                                                                                               | `undo`                                 |
+| **Redo**          | `redo`                                                                                               | `redo`                                 |
 
