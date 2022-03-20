@@ -102,6 +102,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Status} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withStatus(String status, String remark) {
+        this.status = new Status(status, remark);
+        return this;
+    }
+
     public Person build() {
         return new Person(name, phone, email, address, status, modules);
     }

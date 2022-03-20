@@ -29,7 +29,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final String status;
+    private final JsonAdaptedStatus status;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
@@ -38,7 +38,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("status") String status,
+            @JsonProperty("status") JsonAdaptedStatus status,
             @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
@@ -58,7 +58,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        status = source.getStatus().value;
+        status = new JsonAdaptedStatus(source.getStatus());
         tagged.addAll(source.getModules().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -112,7 +112,7 @@ class JsonAdaptedPerson {
 
         final Address modelAddress = new Address(address);
         final Set<Module> modelModules = new HashSet<>(personModules);
-        final Status modelStatus = new Status(status);
+        final Status modelStatus = status.toModelType();
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelStatus, modelModules);
     }

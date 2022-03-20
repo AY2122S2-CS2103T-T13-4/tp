@@ -21,7 +21,8 @@ class JsonAdaptedStatus {
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedStatus(@JsonProperty("value") String value, @JsonProperty("remark") String remark) {
+    public JsonAdaptedStatus(@JsonProperty("value") String value,
+                             @JsonProperty("remark") String remark) {
         this.value = value;
         this.remark = remark;
     }
@@ -30,8 +31,8 @@ class JsonAdaptedStatus {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedStatus(Status source) {
-        value = source.getValue();
-        remark = source.getRemark();
+        this.value = source.getValue();
+        this.remark = source.getRemark();
     }
 
     /**

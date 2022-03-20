@@ -47,7 +47,11 @@ public class StatusCard extends UiPart<Region> {
         super(FXML);
         this.status = status;
         id.setText(displayedIndex + ". ");
-        name.setText(status.getValue());
+        if (status.getValue().equals("")) {
+            name.setText("neutral");
+        } else {
+            name.setText(status.getValue());
+        }
         email.setText(status.getRemark());
 
         // Get the image to display

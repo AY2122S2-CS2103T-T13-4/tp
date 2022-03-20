@@ -4,13 +4,20 @@
     "phone": "94351253",
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111",
-    "status": "",
+    "status": {
+      "value" : "blacklist",
+      "remark" : "He didn't finish his workload"
+    },
     "tagged": [ "CS1231S" ]
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
     "address": "4th street",
-    "status": ""
-  } ]
+    "status": {
+      "value" : "",
+      "remark" : ""
+    }
+  } ],
+  "statuses" : []
 }

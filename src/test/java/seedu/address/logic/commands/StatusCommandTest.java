@@ -74,7 +74,7 @@ public class StatusCommandTest {
         Person editedPerson = new PersonBuilder(firstPerson).withStatus("").build();
 
         StatusCommand statusCommand = new StatusCommand(INDEX_FIRST_PERSON,
-                new Status(editedPerson.getStatus().toString()));
+                new Status(editedPerson.getStatus().getValue()));
 
         String expectedMessage = String.format(StatusCommand.MESSAGE_DELETE_STATUS_SUCCESS, editedPerson);
 

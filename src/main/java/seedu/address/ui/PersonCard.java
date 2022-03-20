@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -18,10 +17,6 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     public final Person person;
-    // Credits to flaticon.com for the below two images
-    private final Image favouriteImage = new Image(this.getClass().getResourceAsStream("/images/favourite.png"));
-    private final Image blacklistImage = new Image(this.getClass().getResourceAsStream("/images/blacklist.png"));
-    private final Image placeholderImage = new Image(this.getClass().getResourceAsStream("/images/placeholder.png"));
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -60,25 +55,9 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
 
-        // Get the image to display
-        Image imageToDisplay = getImageToDisplay(person.getStatus().value);
-        // Then set the image
-        statusImage.setImage(imageToDisplay);
-
         person.getModules().stream()
                 .sorted(Comparator.comparing(module -> module.moduleName))
                 .forEach(module -> modules.getChildren().add(new Label(module.moduleName)));
-    }
-
-    private Image getImageToDisplay(String statusText) {
-        switch (statusText) {
-        case "blacklist":
-            return blacklistImage;
-        case "favourite":
-            return favouriteImage;
-        default:
-            return placeholderImage;
-        }
     }
 
     @Override

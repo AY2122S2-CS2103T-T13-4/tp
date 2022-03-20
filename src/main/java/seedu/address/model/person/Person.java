@@ -36,12 +36,7 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        // This is how to add a proper blacklist/favourite when editing the thing!
-        if (status.toString().equals(BLACKLIST) || status.toString().equals(FAVOURITE)) {
-            this.status = status;
-        } else {
-            this.status = new Status("");
-        }
+        this.status = status;
         this.address = address;
         this.modules.addAll(modules);
     }
