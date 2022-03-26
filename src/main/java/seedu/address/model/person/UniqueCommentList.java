@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Iterator;
 import java.util.List;
 
+import com.sun.javafx.geom.AreaOp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -24,6 +25,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class UniqueCommentList implements Iterable<Comment> {
 
+    private final static int CAPACITY = 10;
+    private final LruCache<Comment> commentCache = new LruCache<>(CAPACITY);
     private final ObservableList<Comment> internalList = FXCollections.observableArrayList();
     private final ObservableList<Comment> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
@@ -42,46 +45,10 @@ public class UniqueCommentList implements Iterable<Comment> {
      */
     public void add(Comment toAdd) {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicatePersonException();
-        }
-        internalList.add(toAdd);
-    }
-
-    /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
-     * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
-     */
-    public void setComments(Comment target, Comment editedComment) {
-        requireAllNonNull(target, editedComment);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new PersonNotFoundException();
-        }
-
-        if (!target.equals(editedComment) && contains(editedComment)) {
-            throw new DuplicatePersonException();
-        }
-
-        internalList.set(index, editedComment);
-    }
-
-    /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
-     */
-    public void remove(Comment toRemove) {
-        requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
-            throw new PersonNotFoundException();
-        }
-    }
-
-    public void setComments(UniqueCommentList replacement) {
-        requireNonNull(replacement);
-        internalList.setAll(replacement.internalList);
+        commentCache.put(toAdd);
+        ObservableList<Comment> list = commentCache.getList();
+        internalList.clear();
+        internalList.addAll(list);
     }
 
     /**
@@ -94,7 +61,9 @@ public class UniqueCommentList implements Iterable<Comment> {
             throw new DuplicatePersonException();
         }
 
-        internalList.setAll(comments);
+        for (Comment comment : comments) {
+            add(comment);
+        }
     }
 
     /**

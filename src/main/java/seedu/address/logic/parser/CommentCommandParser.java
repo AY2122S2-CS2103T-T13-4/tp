@@ -27,8 +27,8 @@ public class CommentCommandParser implements Parser<CommentCommand> {
         requireNonNull(userInput);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput,
                 PREFIX_COMMENT);
-
         Index index;
+        
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {

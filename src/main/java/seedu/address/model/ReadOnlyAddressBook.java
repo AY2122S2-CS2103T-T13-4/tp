@@ -16,4 +16,6 @@ public interface ReadOnlyAddressBook {
     ObservableList<Person> getPersonList();
 
     ObservableList<Comment> getCommentList();
+
+    void addComment(Comment comment);
 }
