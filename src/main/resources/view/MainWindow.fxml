@@ -52,12 +52,22 @@
           </padding>
         </StackPane>
 
-        <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+        <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
+          <items>
+            <VBox fx:id="personList" minWidth="340" prefWidth="340" styleClass="pane-with-border">
+              <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+              </padding>
+              <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            </VBox>
+            <VBox fx:id="commentList" minWidth="340" prefWidth="340" styleClass="pane-with-border">
+              <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+              </padding>
+              <StackPane fx:id="commentListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            </VBox>
+          </items>
+        </SplitPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>

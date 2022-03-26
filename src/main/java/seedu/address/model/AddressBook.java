@@ -6,7 +6,9 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.SortCommand.PersonComparator;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniqueCommentList;
 import seedu.address.model.person.UniquePersonList;
 
 /**
@@ -17,6 +19,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
 
+    private final UniqueCommentList comments;
+
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -26,6 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        comments = new UniqueCommentList();
     }
 
     public AddressBook() {}
@@ -48,6 +53,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setComments(List<Comment> comments) {
+        this.comments.setComments(comments);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -55,6 +64,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setComments(newData.getCommentList());
     }
 
     //// person-level operations
@@ -73,6 +83,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addPerson(Person p) {
         persons.add(p);
+    }
+
+    /**
+     * Adds a comment to the address book.
+     * The comment must not already exist in the address book.
+     */
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 
     /**
@@ -118,6 +136,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Comment> getCommentList() {
+        return comments.asUnmodifiableObservableList();
     }
 
     @Override
