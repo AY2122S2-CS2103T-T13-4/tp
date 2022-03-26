@@ -28,40 +28,56 @@ public class CommentCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_COMMENT + "Good at teamwork and programming";
     public static final String MESSAGE_ADD_SUCCESS = "Added comment to %s: %s";
+    public static final String MESSAGE_ADD_CACHE_SUCCESS = "Added cached comment to %s: %s";
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed comment from %s";
 
-    private final Index index;
+    private final List<Index> indexes;
     private final Comment comment;
 
     /**
-     * @param index of the person in the filtered person list
+     * @param indexes of the person in the filtered person list
      * @param comment comment to be added
      */
-    public CommentCommand(Index index, Comment comment) {
-        requireAllNonNull(index, comment);
+    public CommentCommand(List<Index> indexes, Comment comment) {
+        requireAllNonNull(indexes, comment);
 
-        this.index = index;
+        this.indexes = indexes;
         this.comment = comment;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
-        model.getAddressBook().addComment(comment);
 
-        if (index.getZeroBased() >= lastShownList.size()) {
+        Comment commentToAdd;
+
+        if (indexes.size() == 2) {
+            commentToAdd = getCachedComment(model);
+        } else {
+            commentToAdd = comment;
+        }
+
+        model.getAddressBook().cacheComment(commentToAdd);
+
+        if (indexes.get(0).getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
+        Person personToEdit = lastShownList.get(indexes.get(0).getZeroBased());
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getStatus(),
-                personToEdit.getModules(), comment);
+                personToEdit.getModules(), commentToAdd);
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(generateSuccessMessage(editedPerson));
+    }
+
+    private Comment getCachedComment(Model model) {
+        List<Comment> cachedCommentList = model.getFilteredCommentList();
+        Comment cachedComment = cachedCommentList.get(indexes.get(1).getZeroBased());
+        return cachedComment;
     }
 
     /**
@@ -70,8 +86,12 @@ public class CommentCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        if (personToEdit.getComment().isEmpty()) {
+        if (indexes.size() == 2) {
+            return String.format(MESSAGE_ADD_CACHE_SUCCESS, personToEdit.getName(), personToEdit.getComment());
+
+        } else if (personToEdit.getComment().isEmpty()) {
             return String.format(MESSAGE_REMOVE_SUCCESS, personToEdit.getName());
+
         } else {
             return String.format(MESSAGE_ADD_SUCCESS, personToEdit.getName(), personToEdit.getComment());
         }
@@ -91,7 +111,7 @@ public class CommentCommand extends Command {
 
         // state check
         CommentCommand e = (CommentCommand) other;
-        return index.equals(e.index)
+        return indexes.equals(e.indexes)
                 && comment.equals(e.comment);
     }
 }

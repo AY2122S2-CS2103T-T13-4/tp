@@ -310,10 +310,12 @@ Format: `comment INDEX c/COMMENT`
 * Any existing comments for a person will be overwritten by the new user input.
 * If used without the `c/` prefix, the command will be treated as a delete command and removes the comment of the 
   specified person.
+* There is the least recently used cache for comments of to save commonly used comments. Capacity is **10**.
 
 Examples:
 * `comment 2 c/Good at math.` will add the comment `Good at math` to the 2nd person.
 * `comment 3` will delete the comment for the 3rd person.
+* `comment 1 3` will add the 3rd cached comment to the 1st person.
 
 ### Exiting the program : `exit`
 

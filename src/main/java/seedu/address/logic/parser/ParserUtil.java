@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -24,7 +25,7 @@ import seedu.address.model.person.Status;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-
+    public static final String EXCESSIVE_INDEX_SUPPLIED = "There are too many indexes supplied.";
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -36,6 +37,34 @@ public class ParserUtil {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static List<Index> parseAtMostTwoIndexes(String oneBasedIndex) throws ParseException {
+        String[] indexArr = oneBasedIndex.split(" ");
+        if (indexArr.length > 2) {
+            throw new ParseException(EXCESSIVE_INDEX_SUPPLIED);
+        }
+        String firstTrimmedIndex = indexArr[0].trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(firstTrimmedIndex)) {
+            throw new ParseException(MESSAGE_INVALID_INDEX);
+        }
+
+        if (indexArr.length == 1) {
+            return List.of(Index.fromOneBased(Integer.parseInt(firstTrimmedIndex)));
+        }
+
+        String secondTrimmedIndex = indexArr[1].trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(secondTrimmedIndex)) {
+            throw new ParseException(MESSAGE_INVALID_INDEX);
+        }
+
+        return List.of(Index.fromOneBased(Integer.parseInt(firstTrimmedIndex)),
+                Index.fromOneBased(Integer.parseInt(secondTrimmedIndex)));
     }
 
     /**

@@ -4,11 +4,15 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CommentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Comment;
+
+
 
 /**
  * Parses input arguments and creates a new {@code AddCommentCommand} object
@@ -27,18 +31,18 @@ public class CommentCommandParser implements Parser<CommentCommand> {
         requireNonNull(userInput);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput,
                 PREFIX_COMMENT);
-        Index index;
-        
+        List<Index> indexes;
+
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            indexes = ParserUtil.parseAtMostTwoIndexes(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     CommentCommand.MESSAGE_USAGE), ive);
         }
         if (!argMultimap.getValue(PREFIX_COMMENT).isPresent()) {
-            return new CommentCommand(index, new Comment(""));
+            return new CommentCommand(indexes, new Comment(""));
         }
         Comment comment = ParserUtil.parseComment(argMultimap.getValue(PREFIX_COMMENT).get());
-        return new CommentCommand(index, comment);
+        return new CommentCommand(indexes, comment);
     }
 }

@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -34,7 +36,7 @@ class CommentCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + COMMENT_DESC;
-        CommentCommand expectedCommand = new CommentCommand(targetIndex, new Comment(VALID_COMMENT));
+        CommentCommand expectedCommand = new CommentCommand(List.of(targetIndex), new Comment(VALID_COMMENT));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 }

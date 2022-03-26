@@ -1,38 +1,36 @@
 package seedu.address.model.person;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+/**
+ * A least recently used cache that holds a limited number of elements.
+ * Adapted from https://www.geeksforgeeks.org/lru-cache-implementation/
+ * @param <T>
+ */
 public class LruCache<T> {
     private Set<T> cache;
     private int capacity;
 
+    /**
+     * Constructs a lru cache with the given capacity.
+     * @param capacity
+     */
     public LruCache(int capacity) {
         this.cache = new LinkedHashSet<T>(capacity);
         this.capacity = capacity;
     }
 
-    // This function returns false if key is not
-    // present in cache. Else it moves the key to
-    // front by first removing it and then adding
-    // it, and returns true.
-    public boolean get(T key) {
-        if (!cache.contains(key))
-            return false;
-        cache.remove(key);
-        cache.add(key);
-        return true;
-    }
-
-    // displays contents of cache in Reverse Order
-    public ObservableList<T> getList()
-    {
+    /**
+     * Returns an ObservableList of the cache
+     * @return ObservableList of the cache
+     */
+    public ObservableList<T> getList() {
         LinkedList<T> list = new LinkedList<>(cache);
 
         // The descendingIterator() method of java.util.LinkedList
@@ -48,8 +46,11 @@ public class LruCache<T> {
         return observableList;
     }
 
-    public void put(T key)
-    {
+    /**
+     * Adds an element to the cache. If the cache is full, remove least recently used.
+     * @param key
+     */
+    public void put(T key) {
         // if exists move to front
         if (cache.contains(key)) {
             cache.remove(key);

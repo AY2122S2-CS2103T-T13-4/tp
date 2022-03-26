@@ -25,9 +25,9 @@ public class CommentListPanel extends UiPart<Region> {
     /**
      * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
      */
-    public CommentListPanel(ObservableList<Comment> CommentList) {
+    public CommentListPanel(ObservableList<Comment> commentList) {
         super(FXML);
-        commentListView.setItems(CommentList);
+        commentListView.setItems(commentList);
         commentListView.setCellFactory(listView -> new CommentListViewCell());
     }
 
@@ -36,16 +36,15 @@ public class CommentListPanel extends UiPart<Region> {
      */
     class CommentListViewCell extends ListCell<Comment> {
         @Override
-        protected void updateItem(Comment Comment, boolean empty) {
-            super.updateItem(Comment, empty);
+        protected void updateItem(Comment comment, boolean empty) {
+            super.updateItem(comment, empty);
 
-            if (empty || Comment == null) {
+            if (empty || comment == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new CommentCard(Comment, getIndex() + 1).getRoot());
+                setGraphic(new CommentCard(comment, getIndex() + 1).getRoot());
             }
         }
     }
-
 }

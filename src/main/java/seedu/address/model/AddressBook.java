@@ -90,8 +90,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * The comment must not already exist in the address book.
      */
     @Override
-    public void addComment(Comment comment) {
-        comments.add(comment);
+    public void cacheComment(Comment comment) {
+        comments.addToCache(comment);
     }
 
     /**

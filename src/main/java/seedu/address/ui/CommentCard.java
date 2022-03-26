@@ -2,8 +2,6 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Comment;
@@ -15,7 +13,7 @@ import seedu.address.model.person.Comment;
 public class CommentCard extends UiPart<Region> {
 
     private static final String FXML = "CommentListCard.fxml";
-    public final Comment Comment;
+    public final Comment comment;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -35,11 +33,11 @@ public class CommentCard extends UiPart<Region> {
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public CommentCard(Comment Comment, int displayedIndex) {
+    public CommentCard(Comment comment, int displayedIndex) {
         super(FXML);
-        this.Comment = Comment;
+        this.comment = comment;
         id.setText(displayedIndex + ". ");
-        name.setText(Comment.toString());
+        name.setText(comment.toString());
     }
 
 

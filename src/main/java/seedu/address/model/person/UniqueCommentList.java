@@ -6,11 +6,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Iterator;
 import java.util.List;
 
-import com.sun.javafx.geom.AreaOp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -24,8 +22,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see Person#isSamePerson(Person)
  */
 public class UniqueCommentList implements Iterable<Comment> {
-
-    private final static int CAPACITY = 10;
+    private static final int CAPACITY = 10;
     private final LruCache<Comment> commentCache = new LruCache<>(CAPACITY);
     private final ObservableList<Comment> internalList = FXCollections.observableArrayList();
     private final ObservableList<Comment> internalUnmodifiableList =
@@ -43,7 +40,7 @@ public class UniqueCommentList implements Iterable<Comment> {
      * Adds a Comment to the list.
      * The Comment must not already exist in the list.
      */
-    public void add(Comment toAdd) {
+    public void addToCache(Comment toAdd) {
         requireNonNull(toAdd);
         commentCache.put(toAdd);
         ObservableList<Comment> list = commentCache.getList();
@@ -62,7 +59,7 @@ public class UniqueCommentList implements Iterable<Comment> {
         }
 
         for (Comment comment : comments) {
-            add(comment);
+            addToCache(comment);
         }
     }
 

@@ -61,7 +61,7 @@ class JsonSerializableAddressBook {
         }
         for (JsonAdaptedComment jsonAdaptedComment : comments) {
             Comment comment = jsonAdaptedComment.toModelType();
-            addressBook.addComment(comment);
+            addressBook.cacheComment(comment);
         }
         return addressBook;
     }
