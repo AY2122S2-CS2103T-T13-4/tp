@@ -6,15 +6,15 @@ import static java.util.Objects.requireNonNull;
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is always valid
  */
-public class Comment {
+public class Comment implements Comparable<Comment> {
 
-    public static final String MESSAGE_CONSTRAINTS = "Comments should not be blank";
     /*
      * The first character of the comment must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[^\\s].*";
     public final String value;
+    public static final String MESSAGE_CONSTRAINTS = "Comments should not be blank";
 
     /**
      * Constructor for a comment
@@ -53,5 +53,10 @@ public class Comment {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    @Override
+    public int compareTo(Comment o) {
+        return this.value.length() - o.value.length();
     }
 }

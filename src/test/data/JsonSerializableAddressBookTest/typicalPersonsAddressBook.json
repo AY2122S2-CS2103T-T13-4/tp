@@ -57,5 +57,25 @@
     "module" : [ ],
     "comment": ""
   } ],
-  "comments" : []
+  "comments" : [ {
+    "value" : "This person was very helpful."
+  }, {
+    "value" : "This person was very dishonest."
+  }, {
+    "value" : "Not very familiar with them yet."
+  }, {
+    "value" : "Very popular in school."
+  }, {
+    "value" : "Known for being very rude."
+  }, {
+    "value" : "Academically brilliant."
+  }, {
+    "value" : "Social butterfly."
+  }, {
+    "value" : "Very eccentric and weird."
+  }, {
+    "value" : "Sports inclined."
+  }, {
+    "value" : "Super artsy fartsy."
+  } ]
 }

@@ -23,6 +23,7 @@ public class CommentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a comment to the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing comments will be overwritten by the input.\n"
+            + "Use an empty value after c/ to delete the comment.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_COMMENT + "COMMENT\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -33,7 +34,7 @@ public class CommentCommand extends Command {
 
     private final List<Index> indexes;
     private final Comment comment;
-
+    private final Comment emptyComment = new Comment("");
     /**
      * @param indexes of the person in the filtered person list
      * @param comment comment to be added
@@ -57,7 +58,9 @@ public class CommentCommand extends Command {
             commentToAdd = comment;
         }
 
-        model.getAddressBook().cacheComment(commentToAdd);
+        if (!commentToAdd.equals(emptyComment)) { // prevent caching empty string
+            model.getAddressBook().cacheComment(commentToAdd);
+        }
 
         if (indexes.get(0).getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

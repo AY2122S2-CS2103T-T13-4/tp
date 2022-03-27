@@ -19,12 +19,19 @@ class CommentCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommentCommand.MESSAGE_USAGE);
     private CommentCommandParser parser = new CommentCommandParser();
+    private List<Index> firstIndexes = List.of(INDEX_FIRST_PERSON);
 
     @Test
     public void parse_invalidArgs_failure() {
-        assertParseFailure(parser, "1 c/", Comment.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
         assertParseFailure(parser, "5 Very rude", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_deleteComment_success() {
+        String userInput = "1 c/";
+        CommentCommand expectedCommand = new CommentCommand(firstIndexes, new Comment(""));
+        assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
