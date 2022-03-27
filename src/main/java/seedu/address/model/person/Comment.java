@@ -13,8 +13,8 @@ public class Comment implements Comparable<Comment> {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[^\\s].*";
-    public static final String MESSAGE_CONSTRAINTS = "Comments should not be blank";
     public final String value;
+    public static final String MESSAGE_CONSTRAINTS = "Comments should not be blank";
 
     /**
      * Constructor for a comment
