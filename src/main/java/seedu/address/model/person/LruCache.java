@@ -95,7 +95,7 @@ public class LruCache<T> {
         }
 
         // state check
-        LruCache<T> e = (LruCache<T>) other;
+        LruCache<?> e = (LruCache<?>) other;
         return capacity == e.capacity
                 && cache.equals(e.cache);
     }
