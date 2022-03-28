@@ -8,7 +8,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -54,9 +53,6 @@ public class UniqueCommentList implements Iterable<Comment> {
      */
     public void setComments(List<Comment> comments) {
         requireAllNonNull(comments);
-        if (!commentsAreUnique(comments)) {
-            throw new DuplicatePersonException();
-        }
 
         for (Comment comment : comments) {
             addToCache(comment);
@@ -85,19 +81,5 @@ public class UniqueCommentList implements Iterable<Comment> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
-    }
-
-    /**
-     * Returns true if {@code persons} contains only unique persons.
-     */
-    private boolean commentsAreUnique(List<Comment> comments) {
-        for (int i = 0; i < comments.size() - 1; i++) {
-            for (int j = i + 1; j < comments.size(); j++) {
-                if (comments.get(i).equals(comments.get(j))) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

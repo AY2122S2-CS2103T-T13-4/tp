@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -7,6 +9,7 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 
 /**
  * A least recently used cache that holds a limited number of elements.
@@ -22,6 +25,7 @@ public class LruCache<T> {
      * @param capacity
      */
     public LruCache(int capacity) {
+        requireNonNull(capacity);
         this.cache = new LinkedHashSet<T>(capacity);
         this.capacity = capacity;
     }
@@ -65,5 +69,34 @@ public class LruCache<T> {
         }
 
         cache.add(key);
+    }
+
+    /**
+     * Add variable number of elements to the cache.
+     * @param keys
+     */
+    @SafeVarargs
+    public final void putVarArgs(T... keys) {
+        for (T key : keys) {
+            put(key);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof LruCache<?>)) {
+            return false;
+        }
+
+        // state check
+        LruCache<T> e = (LruCache<T>) other;
+        return capacity == e.capacity
+                && cache.equals(e.cache);
     }
 }
