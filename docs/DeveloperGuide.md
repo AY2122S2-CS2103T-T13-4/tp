@@ -346,20 +346,28 @@ Step 5. Commands that are not undoable are not added into the `undoStack`
 Step 6. The user executes clear.
 
 ![UndoRedo7](images/UndoRedo7.png)
+
 #### Design considerations:
 
 **Aspect: How undo & redo executes:**
 
 * **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+  * Pros: Implementation is easy.
+  * Cons: Memory usage may cause performance issues.
 
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+* **Alternative 2:** Individual command knows how to undo/redo by itself.
+  * Pros: Will use less memory (e.g. just save what is being deleted).
+  * Cons: Must ensure that the implementation of each command is correct.
 
-_{more aspects and alternatives to be added}_
+**Aspect: Data structure to support the undo/redo commands:**
+
+* **Alternative 1 (current choice):** Use 2 stacks to store the history of the Models.
+  * Pros: Implementation is easy.
+  * Cons: Duplicated Logic.
+
+* **Alternative 2:** Use `HistoryManager` for undo/redo.
+  * Pros: Do not need to maintain separate stacks and able to use what is in the codebase.
+  * Cons: Single Responsibility Principle and Separation of Concerns are violated as `HistoryManager` would need to handle two different things._
 
 ### \[Proposed\] Data archiving
 

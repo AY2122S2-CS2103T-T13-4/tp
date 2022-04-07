@@ -1,0 +1,24 @@
+@startuml
+
+
+Command <|-- RedoableCommand
+
+class Command {
+    StackUndoRedo undoRedoStack
+    CommandResults execute(Model model)
+    void setData(StackUndoRedo undoRedoStack)
+}
+
+class RedoableCommand
+ {
+    ReadOnlyAddressBook previousAddressBook
+    ReadOnlyAddressBook previousArchiveBook
+    boolean isSwapped
+    void saveAddressBookSnapshot(Model model)
+    void undo(Model model)
+    void redo(Model model)
+    CommandResult execute(Model model)
+}
+
+
+@enduml

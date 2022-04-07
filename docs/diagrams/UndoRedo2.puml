@@ -1,0 +1,4 @@
+@startuml
+StackUndoRedo *-- undoStack
+StackUndoRedo *-- redoStack
+@enduml

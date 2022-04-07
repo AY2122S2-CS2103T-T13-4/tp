@@ -1,0 +1,21 @@
+@startuml
+start
+:User inputs commands;
+:System pushes command into StackUndoRedo;
+
+
+if () then (Command is not Undoable)
+    :Command will not be
+    added into undoStack;
+else (Command is Undoable)
+    if () then (is UndoCommand or RedoCommand)
+        :Clear RedoStack;
+        :Command pushed into
+                undoStack;
+    else (is not UndoCommand or RedoCommand)
+    :Command pushed into
+                undoStack;
+    endif
+endif
+stop
+@enduml
