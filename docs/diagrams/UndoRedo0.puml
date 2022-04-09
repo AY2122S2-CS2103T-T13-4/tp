@@ -1,4 +1,5 @@
 @startuml
+hide circle
 
 
 Command <|-- RedoableCommand
