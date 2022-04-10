@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.ui.StatusBarFooter.isArchiveBook;
 
 import java.util.List;
 
@@ -26,12 +24,13 @@ public class CommentCommand extends RedoableCommand {
             + "by the index number used in the displayed person list. "
             + "Existing comments will be overwritten by the input.\n"
             + "Use an empty value after c/ to delete the comment.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer and less than 2,147,483,647) "
             + PREFIX_COMMENT + "COMMENT\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_COMMENT + "Good at teamwork and programming";
     public static final String MESSAGE_ADD_SUCCESS = "Added comment to %s: %s";
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed comment from %s";
+    public static final String MESSAGE_COMMENT_TOO_LONG = "Comment must be within 60 characters!";
 
     private final Index index;
     private final Comment comment;
@@ -87,19 +86,18 @@ public class CommentCommand extends RedoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        if (comment.getLength() > Comment.MAX_LENGTH) {
+            throw new CommandException(MESSAGE_COMMENT_TOO_LONG);
+        }
+
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getStatus(),
                 personToEdit.getModules(), comment);
 
-        if (isArchiveBook()) {
-            model.setArchivedPerson(personToEdit, editedPerson);
-        } else {
-            model.setPerson(personToEdit, editedPerson);
-        }
+        model.setPerson(personToEdit, editedPerson);
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 }

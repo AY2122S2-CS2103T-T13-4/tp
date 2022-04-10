@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.ui.StatusBarFooter.isArchiveBook;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +24,7 @@ public class ClearModulesCommand extends RedoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Clear all modules of the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer and less than 2,147,483,647)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "%s's modules have been cleared";
@@ -49,12 +47,7 @@ public class ClearModulesCommand extends RedoableCommand {
         Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit);
 
-        if (isArchiveBook()) {
-            model.setArchivedPerson(personToEdit, editedPerson);
-        } else {
-            model.setPerson(personToEdit, editedPerson);
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.setPerson(personToEdit, editedPerson);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, editedPerson.getName()));
     }

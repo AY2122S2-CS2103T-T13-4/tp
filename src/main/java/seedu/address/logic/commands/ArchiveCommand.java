@@ -17,12 +17,12 @@ public class ArchiveCommand extends RedoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Archives the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer and less than 2,147,483,647)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String ALT_MESSAGE_USAGE = ALT_COMMAND_WORD
             + ": Unarchives the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer and less than 2,147,483,647)\n"
             + "Example: " + ALT_COMMAND_WORD + " 1";
 
 
@@ -59,9 +59,25 @@ public class ArchiveCommand extends RedoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        int oneBasedIndex = targetIndex.getOneBased();
-        String oneBasedIndexString = Integer.toString(oneBasedIndex);
-        return new CommandResult(oneBasedIndexString, false, false, false, false, false, false, this.mode);
+        Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
+
+        if (model.hasArchivedPerson(targetPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON_ARCHIVE);
+        }
+
+        model.deletePerson(targetPerson);
+        model.addArchivedPerson(targetPerson);
+
+        if (mode.equals(COMMAND_WORD)) {
+
+            return new CommandResult(String.format(MESSAGE_ARCHIVE_PERSON_SUCCESS, targetIndex.getOneBased()));
+        } else if (mode.equals(ALT_COMMAND_WORD)) {
+
+            return new CommandResult(String.format(MESSAGE_UNARCHIVE_PERSON_SUCCESS, targetIndex.getOneBased()));
+        } else {
+
+            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+        }
     }
 
     @Override

@@ -23,7 +23,12 @@ public class RedoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
-        undoRedoStack.popRedo().redo(model);
+        RedoableCommand command = undoRedoStack.popRedo();
+        if (command instanceof SwitchCommand) {
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(MESSAGE_SUCCESS, false, false, false, false, false, true);
+        }
+        command.redo(model);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

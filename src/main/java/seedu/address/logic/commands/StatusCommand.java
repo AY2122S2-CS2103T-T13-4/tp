@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.ui.StatusBarFooter.isArchiveBook;
 
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class StatusCommand extends RedoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the status of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing status will be overwritten by the input.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer and less than 2,147,483,647) "
             + PREFIX_STATUS + "[STATUS]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_STATUS + "blacklist";
@@ -87,12 +85,9 @@ public class StatusCommand extends RedoableCommand {
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), status, personToEdit.getModules(), personToEdit.getComment());
 
-        if (isArchiveBook()) {
-            model.setArchivedPerson(personToEdit, editedPerson);
-        } else {
-            model.setPerson(personToEdit, editedPerson);
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        model.setPerson(personToEdit, editedPerson);
+
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 }

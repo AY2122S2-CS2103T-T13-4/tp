@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-import static seedu.address.ui.StatusBarFooter.isArchiveBook;
 
 import java.util.Comparator;
 import java.util.List;
@@ -45,6 +44,8 @@ public class SortCommand extends RedoableCommand {
      * @param fields modules to be deleted
      */
     public SortCommand(List<Prefix> fields, List<String> orders, String successField) {
+        assert orders.size() == fields.size();
+        assert orders.size() != 0;
         this.successField = successField;
         this.orders = orders;
         this.fields = fields;
@@ -53,13 +54,8 @@ public class SortCommand extends RedoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand(Model model) throws CommandException {
-
         requireNonNull(model);
-        if (isArchiveBook()) {
-            model.sortArchivedPerson(personComparator);
-        } else {
-            model.sortPerson(personComparator);
-        }
+        model.sortPerson(personComparator);
         return new CommandResult(String.format(MESSAGE_SUCCESS, successField));
     }
 

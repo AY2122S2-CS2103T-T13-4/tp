@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.ui.StatusBarFooter.isArchiveBook;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,13 +21,13 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Status;
 
-public class DeleteModuleCommand extends RedoableCommand {
-    public static final String COMMAND_WORD = "deletemodule";
+public class DeleteModulesCommand extends RedoableCommand {
+    public static final String COMMAND_WORD = "deletemodules";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Clear specified modules of the person identified by the index "
             + "number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer and less than 2,147,483,647) "
             + "[" + PREFIX_MODULE + "MODULE]...\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_MODULE + "CS3230 " + PREFIX_MODULE + "CS1231S\n";
 
@@ -44,7 +42,7 @@ public class DeleteModuleCommand extends RedoableCommand {
      * @param targetIndex of the person in the filtered person list
      * @param modules     modules to be deleted
      */
-    public DeleteModuleCommand(Index targetIndex, List<Module> modules) {
+    public DeleteModulesCommand(Index targetIndex, List<Module> modules) {
         this.targetIndex = targetIndex;
         this.modules = modules;
     }
@@ -65,7 +63,7 @@ public class DeleteModuleCommand extends RedoableCommand {
 
         Set<Module> oldModules = personToEdit.getModules();
         Set<Module> updatedModules = new HashSet<>(oldModules);
-        modules.removeIf(module -> updatedModules.remove(module));
+        modules.removeIf(updatedModules::remove);
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedStatus, updatedModules, updatedComment);
@@ -74,9 +72,9 @@ public class DeleteModuleCommand extends RedoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteModuleCommand // instanceof handles nulls
-                        && targetIndex.equals(((DeleteModuleCommand) other).targetIndex)) // state check
-                        && modules.equals(((DeleteModuleCommand) other).modules);
+                || (other instanceof DeleteModulesCommand // instanceof handles nulls
+                        && targetIndex.equals(((DeleteModulesCommand) other).targetIndex)) // state check
+                        && modules.equals(((DeleteModulesCommand) other).modules);
     }
 
     @Override
@@ -91,20 +89,14 @@ public class DeleteModuleCommand extends RedoableCommand {
 
         List<Module> modulesToDelete = new ArrayList<>(modules);
         Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, modules);
+        Person editedPerson = createEditedPerson(personToEdit, modulesToDelete);
 
-        if (modules.size() != 0) {
-            throw new CommandException(String.format(MESSAGE_FAILURE, modules));
+        if (modulesToDelete.size() != 0) {
+            throw new CommandException(String.format(MESSAGE_FAILURE, modulesToDelete));
         }
 
-        if (isArchiveBook()) {
-            model.setArchivedPerson(personToEdit, editedPerson);
-        } else {
-            model.setPerson(personToEdit, editedPerson);
-        }
+        model.setPerson(personToEdit, editedPerson);
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, editedPerson.getName(), modulesToDelete));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedPerson.getName(), modules));
     }
 }

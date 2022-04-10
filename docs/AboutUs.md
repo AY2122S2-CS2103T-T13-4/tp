@@ -17,7 +17,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/fantablack.md)]
 
 * Role: Developer
-* Responsibilities: TBA
+* Responsibilities: Developer
 
 ### Benjamin Tay Keck Bin
 
@@ -27,7 +27,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/btaykb.md)]
 
 * Role: Developer
-* Responsibilities: TBC
+* Responsibilities: Code, Documentation
 
 ### Julio Harjo
 
@@ -47,7 +47,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/bakano98.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: GUI, features enhancement
 
 ### Law Wei Ming
 

@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.ui.StatusBarFooter.isArchiveBook;
 
 import java.util.Collections;
@@ -39,7 +38,7 @@ public class EditCommand extends RedoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer and less than 2,147,483,647) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
@@ -127,7 +126,7 @@ public class EditCommand extends RedoableCommand {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index == null || editPersonDescriptor == null) {
-            return new CommandResult(SHOWING_EDIT_WINDOW, false, false, true, false, false, false, "");
+            return new CommandResult(SHOWING_EDIT_WINDOW, false, false, true, false, false, false);
         }
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -137,17 +136,23 @@ public class EditCommand extends RedoableCommand {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
+        if (isArchiveBook()) {
+            // Then don't allow editing of name
+            if (!editedPerson.getName().equals(personToEdit.getName())) {
+                throw new CommandException("Editing of names is not allowed in archives");
+            }
+        }
+
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        if (isArchiveBook()) {
-            model.setArchivedPerson(personToEdit, editedPerson);
-        } else {
-            model.setPerson(personToEdit, editedPerson);
+        if (model.hasArchivedPerson(editedPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.setPerson(personToEdit, editedPerson);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
